@@ -5,7 +5,7 @@ import com.toosame.weather.R;
 import java.util.HashMap;
 
 /**
- * Created by Mr旋风小伙 on 2017年4月27日 0027.
+ * Created by 旋风小伙 on 2017年4月27日 0027.
  */
 
 public class WeatherUtils {

@@ -1,24 +1,15 @@
 package com.toosame.weather;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,18 +19,13 @@ import com.toosame.weather.model.Lives;
 import com.toosame.weather.model.TimeWeather;
 import com.toosame.weather.model.Weather;
 import com.toosame.weather.utils.HttpClient;
-import com.toosame.weather.utils.IHttpCallback;
 import com.toosame.weather.utils.WeatherUtils;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,16 +62,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        relativeLayout = (LinearLayout) findViewById(R.id.activity_main);
-        linearLayout = (LinearLayout)findViewById(R.id.main_weather_info_layout);
-        headerLabel = (TextView)findViewById(R.id.main_header_label);
-        weatherImage = (ImageView)findViewById(R.id.main_weather_image);
-        weatherLabel = (TextView)findViewById(R.id.main_weather_info);
-        windDirectionLabel = (TextView)findViewById(R.id.main_weather_direction);
-        windLabel = (TextView)findViewById(R.id.main_weather_wind);
-        posttimeLabel = (TextView)findViewById(R.id.main_weather_posttime);
-        temperatureLabel = (TextView)findViewById(R.id.main_wearher_temperature);
-        switchBtn = (Button)findViewById(R.id.change_btn);
+        relativeLayout = findViewById(R.id.activity_main);
+        linearLayout = findViewById(R.id.main_weather_info_layout);
+        headerLabel = findViewById(R.id.main_header_label);
+        weatherImage = findViewById(R.id.main_weather_image);
+        weatherLabel = findViewById(R.id.main_weather_info);
+        windDirectionLabel = findViewById(R.id.main_weather_direction);
+        windLabel = findViewById(R.id.main_weather_wind);
+        posttimeLabel = findViewById(R.id.main_weather_posttime);
+        temperatureLabel = findViewById(R.id.main_wearher_temperature);
+        switchBtn = findViewById(R.id.change_btn);
 
         switchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         adcode = intent.getStringExtra(SplashActivity.ADCODE);
         headerLabel.setText(cityName);
 
-        HttpClient.query(adcode, HttpClient.WEATHER_TYPE_BASE, Weather.class, new IHttpCallback() {
+        HttpClient.query(adcode, HttpClient.WEATHER_TYPE_BASE, Weather.class, new HttpClient.IHttpCallback() {
             @Override
             public <T> void onSuccess(T result, boolean isSuccess) {
                 if(isSuccess){
@@ -153,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        HttpClient.query(adcode, HttpClient.WEATHER_TYPE_ALL, TimeWeather.class, new IHttpCallback() {
+        HttpClient.query(adcode, HttpClient.WEATHER_TYPE_ALL, TimeWeather.class, new HttpClient.IHttpCallback() {
             @Override
             public <T> void onSuccess(T result, boolean isSuccess) {
                 if (isSuccess){
@@ -165,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
                                 for (Forecasts forecasts : timeWeather.getForecasts()){
                                     for (Casts casts : forecasts.getCasts()){
                                         View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.weather_itme,linearLayout,false);
-                                        TextView date = (TextView)view.findViewById(R.id.item_date);
-                                        TextView max = (TextView)view.findViewById(R.id.item_max);
-                                        TextView min = (TextView)view.findViewById(R.id.itme_min);
-                                        TextView currentWeather = (TextView)view.findViewById(R.id.item_weather);
-                                        TextView week = (TextView)view.findViewById(R.id.item_week);
+                                        TextView date = view.findViewById(R.id.item_date);
+                                        TextView max = view.findViewById(R.id.item_max);
+                                        TextView min = view.findViewById(R.id.itme_min);
+                                        TextView currentWeather = view.findViewById(R.id.item_weather);
+                                        TextView week = view.findViewById(R.id.item_week);
 
                                         date.setText(getDay(casts.getDate()));
                                         max.setText(casts.getDaytemp() + "°");
@@ -229,16 +215,4 @@ public class MainActivity extends AppCompatActivity {
                 return "星期日";
         }
     }
-
-    //获取手机状态栏高
-//    public static int getStatusBarHeight(Context context)
-//    {
-//        int result = 0;
-//        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-//        if (resourceId > 0)
-//        {
-//            result = context.getResources().getDimensionPixelSize(resourceId);
-//        }
-//        return result;
-//    }
 }

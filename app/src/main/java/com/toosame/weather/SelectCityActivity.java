@@ -4,25 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.toosame.weather.model.City;
 import com.toosame.weather.model.DisCity;
 import com.toosame.weather.model.Districts;
 import com.toosame.weather.model.DistrictsRoot;
@@ -32,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SelectCityActivity extends AppCompatActivity {
@@ -42,7 +33,6 @@ public class SelectCityActivity extends AppCompatActivity {
     private List<String> cityKeyVal;
     private List<String> cityVal;
     private Gson jsonConverter = new Gson();
-    private Button doneBtn;
 
     private String selectName;
     private String selectCode;
@@ -97,8 +87,8 @@ public class SelectCityActivity extends AppCompatActivity {
         cities.add(R.raw.yunnang);
         cities.add(R.raw.zhejiang);
 
-        doneBtn = (Button)findViewById(R.id.done_btn);
-        autoCompleteTextView = (AutoCompleteTextView)findViewById(R.id.city_textview);
+        Button doneBtn = findViewById(R.id.done_btn);
+        autoCompleteTextView = findViewById(R.id.city_textview);
 
         cityKeyVal = new ArrayList<>();
         cityVal = new ArrayList<>();
